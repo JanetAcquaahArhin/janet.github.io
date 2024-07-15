@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<!--
+    Aerial by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+    <title>Janet's Portfolio</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/typewriter.css" />
+    <link rel="stylesheet" href="assets/css/custom.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+</head>
+<body class="is-preload">
+    <div id="wrapper">
+        <div id="bg"></div>
+        <div id="overlay"></div>
+        <div id="main"> 
+
+            <!-- Header -->
+            <header id="header">
+                <h1>Janet Acquaah-Arhin</h1>
+                <p>I am a dedicated professional with experience in clinical trial data analysis and biomedical engineering.</p>
+                <p class="typewriter-text"></p>
+                <nav>
+                    <ul>
+                        <li><a href="projects.html" class="icon solid fa-folder" title="Projects"><span class="label">Projects</span></a></li>
+                        <li><a href="https://www.linkedin.com/in/janetacquaaharhin/" class="icon brands fa-linkedin" title="LinkedIn"><span class="label">LinkedIn</span></a></li>
+                        <li><a href="https://github.com/JanetAcquaahArhin/Projects" class="icon brands fa-github" title="GitHub"><span class="label">GitHub</span></a></li>
+                        <li><a href="mailto:janetacquaaharhin@gmail.com" class="icon solid fa-envelope" title="Email"><span class="label">Email</span></a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <!-- About Section -->
+            <section id="about">
+                <div class="about-container">
+                    <img src="assets/images/profile.jpg" alt="Janet Acquaah-Arhin">
+                    <div class="about-text">
+                        <h2>About Me</h2>
+                        <p>Hello! I'm Janet Acquaah-Arhin, a clinical trial data analyst and biomedical engineer with a passion for leveraging data to improve healthcare outcomes. With a strong background in both clinical and engineering domains, I specialize in analyzing complex datasets and developing innovative solutions to challenging problems. I am committed to continuous learning and staying updated with the latest advancements in the field.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CV Section -->
+            <section id="cv-section">
+                <h2>View and Download My Resume</h2>
+                <a href="assets/cv/my_cv.pdf" target="_blank">View My Resume</a>
+                <br>
+                <a href="assets/cv/my_cv.pdf" download>Download My Resume</a>
+            </section>
+
+            <!-- Certifications Section -->
+            <section id="certifications">
+                <h2>Certifications</h2>
+                <div class="cert-container">
+                    <div class="cert-item">
+                        <img src="assets/images/cert1.jpg" alt="Certification 1">
+                        <h3>Certification Title 1</h3>
+                        <p>Certification description 1.</p>
+                    </div>
+                    <div class="cert-item">
+                        <img src="assets/images/cert2.jpg" alt="Certification 2">
+                        <h3>Certification Title 2</h3>
+                        <p>Certification description 2.</p>
+                    </div>
+                    <!-- Add more certifications as needed -->
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer id="footer">
+                <span class="copyright">&copy; July 2024</span>
+            </footer>
+        </div>
+    </div>
+    <script>
+        window.onload = function() {
+            document.body.classList.remove('is-preload');
+            // Typewriter effect
+            const typewriterText = document.querySelector('.typewriter-text');
+            const textArray = ["Clinical Trial Data Analyst", "Biomedical Engineer"];
+            let textIndex = 0;
+            let charIndex = 0;
+            let currentText = "";
+            
+            function type() {
+                if (charIndex < textArray[textIndex].length) {
+                    currentText += textArray[textIndex].charAt(charIndex);
+                    typewriterText.textContent = currentText;
+                    charIndex++;
+                    setTimeout(type, 100);
+                } else {
+                    setTimeout(() => {
+                        charIndex = 0;
+                        currentText = "";
+                        textIndex = (textIndex + 1) % textArray.length;
+                        type();
+                    }, 2000);
+                }
+            }
+            
+            type();
+        }
+
+        window.ontouchmove = function() { return false; }
+        window.onorientationchange = function() { document.body.scrollTop = 0; }
+    </script>
+</body>
+</html>
