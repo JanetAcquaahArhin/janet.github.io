@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>MySQL Project 1 - Data Cleaning</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/custom.css" />
+    <noscript>
+        <link rel="stylesheet" href="assets/css/noscript.css" />
+    </noscript>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+            overflow-y: scroll; /* Ensures vertical scrolling */
+        }
+
+        .back-button {
+            display: inline-block;
+            margin: 20px;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #555;
+        }
+
+        .project-content {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-content h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .project-content h2 {
+            font-size: 2em;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .project-content h3 {
+            font-size: 1.5em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #343a40;
+        }
+
+        .project-content p, .project-content ul {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        ul {
+            margin-left: 20px;
+            list-style-type: disc;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 1em;
+            line-height: 1.5;
+            border-left: 5px solid #007bff;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .results {
+            background: #eef;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border-left: 5px solid #007bff;
+        }
+
+        .results h4 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="projects.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+    <div class="project-content">
+        <h1>Data Cleaning - MySQL Project</h1>
+        <p>
+            In this project, a dataset from a survey conducted to help with lung cancer research was cleaned and prepared for analysis using MySQL. The dataset contained various inconsistencies and missing values that needed to be addressed.
+        </p>
+        <h2>Project Details</h2>
+        <p>The main objectives of this project were:</p>
+        <ul>
+            <li>Identify and remove duplicate records.</li>
+            <li>Handle missing values appropriately.</li>
+            <li>Normalize the data to reduce redundancy.</li>
+            <li>Generate summary statistics to understand the data better.</li>
+        </ul>
+        <h2>Technologies Used</h2>
+        <p>This project utilized the following technologies and tools:</p>
+        <ul>
+            <li>MySQL</li>
+            <li>SQL</li>
+            <li>Data Cleaning Techniques</li>
+        </ul>
+        <h2>Code and Results</h2>
+        <h3>1. Remove Duplicate Records</h3>
+        <pre><code>DELETE FROM survey_data
+WHERE id IN (
+    SELECT id
+    FROM (
+        SELECT id, ROW_NUMBER() OVER (PARTITION BY name, date_of_birth ORDER BY id) AS row_num
+        FROM survey_data
+    ) temp
+    WHERE temp.row_num > 1
+);</code></pre>
+        <div class="results">
+            <h4>Result:</h4>
+            <p>Duplicate records removed successfully.</p>
+        </div>
+
+        <h3>2. Handle Missing Values</h3>
+        <pre><code>UPDATE survey_data
+SET age = IFNULL(age, (SELECT AVG(age) FROM survey_data))
+WHERE age IS NULL;</code></pre>
+        <div class="results">
+            <h4>Result:</h4>
+            <p>Missing values in the 'age' column were filled with the average age.</p>
+        </div>
+
+        <h3>3. Normalize Data</h3>
+        <pre><code>CREATE TABLE normalized_data AS
+SELECT DISTINCT name, date_of_birth, age, diagnosis
+FROM survey_data;</code></pre>
+        <div class="results">
+            <h4>Result:</h4>
+            <p>Data normalized and stored in a new table 'normalized_data'.</p>
+        </div>
+
+        <h3>4. Summary Statistics</h3>
+        <pre><code>SELECT diagnosis, COUNT(*) AS count, AVG(age) AS avg_age
+FROM normalized_data
+GROUP BY diagnosis;</code></pre>
+        <div class="results">
+            <h4>Result:</h4>
+            <p>Summary statistics generated for each diagnosis category:</p>
+            <ul>
+                <li>Diagnosis: Cancer, Count: 150, Average Age: 45.2</li>
+                <li>Diagnosis: Healthy, Count: 200, Average Age: 34.6</li>
+            </ul>
+        </div>
+
+        <h2>Conclusion</h2>
+        <p>
+            This project demonstrates the importance of data cleaning in preparing datasets for analysis. Properly cleaned data ensures more accurate and reliable results in subsequent analyses.
+        </p>
+    </div>
+</body>
+</html>
